@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AAPL Social Sentiment Analysis Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap');
+
+:root{
+--glass: rgba(255,255,255,0.2);
+--glass-hover: rgba(255,255,255,0.9);
+--border: rgba(255,255,255,0.4);
+}
+
+body,html{
+margin:0;
+padding:0;
+background-color:#e2e8f0;
+font-family:'Inter',sans-serif;
+color:#1a1a1a;
+scroll-behavior:smooth;
+}
+
+#fluid-canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+opacity:.35;
+filter:brightness(1.1);
+}
+
+.glass-card{
+background:var(--glass);
+backdrop-filter:blur(12px) saturate(150%);
+-webkit-backdrop-filter:blur(12px) saturate(150%);
+border:1px solid var(--border);
+transition:all .7s cubic-bezier(.16,1,.3,1);
+opacity:1;
+}
+
+.glass-card:not(.active):hover{
+background:var(--glass-hover);
+transform:translateY(-5px);
+box-shadow:0 40px 100px rgba(0,0,0,.04);
+cursor:pointer;
+}
+
+.section-label{
+font-size:10px;
+font-weight:700;
+color:#888;
+letter-spacing:.3em;
+text-transform:uppercase;
+}
+
+.img-slot{
+width:100%;
+background:rgba(255,255,255,.4);
+border:1px dashed rgba(0,0,0,.1);
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+transition:.5s;
+}
+
+.tag-btn{
+border:1px solid rgba(0,0,0,.15);
+padding:6px 16px;
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.15em;
+transition:.4s;
+font-weight:600;
+display:block;
+width:fit-content;
+}
+
+#details-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(241,245,249,.98);
+backdrop-filter:blur(20px);
+z-index:1000;
+display:none;
+overflow-y:auto;
+}
+
+#details-overlay.active{
+display:block;
+}
+
+</style>
+</head>
+
+<body class="p-6 md:p-20">
+
+<canvas id="fluid-canvas"></canvas>
+
+<header class="max-w-7xl mx-auto mb-12">
+
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-[1px] bg-black/20"></div>
+<p class="section-label">AIDM7020 FINAL CASE STUDY</p>
+</div>
+
+<h1 class="text-5xl md:text-7xl font-thin tracking-tighter text-black leading-none mb-6">
+SENTIMENT <br><span class="font-normal italic">v.s.</span> MARKET
+</h1>
+
+<p class="max-w-2xl text-lg font-light text-gray-500 leading-relaxed">
+Apple Inc. (AAPL) Social Media & Stock Dynamics (2016-2025)<br>
+Exploring the dynamic correlation between Twitter sentiment and Apple Inc. (AAPL) stock performance around iPhone launch events from 2016 to 2025.
+</p>
+
+</header>
+
+
+<main class="max-w-7xl mx-auto grid grid-cols-10 gap-6">
+
+<div class="col-span-12 md:col-span-5 glass-card p-12">
+
+<h2 class="section-label mb-12">01. Research Design</h2>
+
+<h3 class="text-3xl font-light mb-8">Objectives & Hypothesis</h3>
+
+<p class="text-sm font-light leading-relaxed text-gray-500 mb-10">
+While social media provides a "mirror" to investor views, its actual predictive power for mega-cap stocks remains controversial. Our study bridges this gap using weekly event windows.
+</p>
+
+<div class="space-y-4">
+<div class="tag-btn">RQ1: Do significant AR exist near major events?</div>
+<div class="tag-btn">RQ2: Statistical link between Sentiment & Price?</div>
+<div class="tag-btn">RQ3: Predictive power for future weekly returns?</div>
+</div>
+
+</div>
+
+
+<div class="col-span-12 md:col-span-7 glass-card p-12 flex flex-col justify-between">
+
+<div>
+<h2 class="section-label mb-8">02. Framework</h2>
+
+<div class="grid grid-cols-2 gap-10 mb-10">
+
+<div>
+<p class="text-[10px] text-gray-400 font-bold uppercase mb-2">Timeframe</p>
+<p class="text-xl font-light">2016 - 2025</p>
+</div>
+
+<div>
+<p class="text-[10px] text-gray-400 font-bold uppercase mb-2">Event Window</p>
+<p class="text-xl font-light">Wk -1 to Wk +3</p>
+</div>
+
+</div>
+</div>
+
+<img src="data_framework.png" class="w-full h-full object-contain">
+
+</div>
+
+
+<div class="col-span-12 mt-10">
+
+<h2 class="section-label mb-10 text-center">03. Methodology</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+<div class="glass-card p-8" onclick="location.href='pearson.html'">
+<h4 class="text-2xl font-thin">Pearson</h4>
+<p class="text-[9px] text-gray-400 font-bold uppercase mt-2">Correlation</p>
+</div>
+
+<div class="glass-card p-8" onclick="location.href='contingency.html'">
+<h4 class="text-2xl font-thin">2 × 2</h4>
+<p class="text-[9px] text-gray-400 font-bold uppercase mt-2">Contingency</p>
+</div>
+
+<div class="glass-card p-8" onclick="location.href='chisq.html'">
+<h4 class="text-2xl font-thin">Chi-Sq</h4>
+<p class="text-[9px] text-gray-400 font-bold uppercase mt-2">Independence</p>
+</div>
+
+<div class="glass-card p-8" onclick="location.href='lag.html'">
+<h4 class="text-2xl font-thin">Lag-1</h4>
+<p class="text-[9px] text-gray-400 font-bold uppercase mt-2">Regression</p>
+</div>
+
+</div>
+</div>
+
+
+<div class="col-span-12 md:col-span-8 glass-card p-12">
+
+<h2 class="section-label mb-10">04. Abnormal Return (AR)</h2>
+
+<div class="w-full h-80 flex items-center justify-center mb-6">
+<img src="ar_chart.png" class="w-full h-full object-contain">
+</div>
+
+<p class="text-sm font-light text-gray-500 leading-relaxed border-l-2 border-black/10 pl-6">
+This chart compares Apple’s abnormal returns with the S&P 500 weekly returns across 50 launch-related observations from 2016–2025. The results show that AAPL often achieves small positive abnormal returns around iPhone launch periods, although occasional negative shocks appear due to broader market conditions.
+</p>
+
+</div>
+
+
+<!-- 修改后的 Case Study 卡片 -->
+
+<div class="col-span-12 md:col-span-4 flex flex-col gap-6">
+
+<div class="glass-card p-10 flex-1 relative overflow-hidden" onclick="location.href='obs16.html'">
+
+<h2 class="section-label">Case Study</h2>
+<h4 class="text-2xl font-thin mt-4">Obs.16 Macro Pressure</h4>
+
+<div class="absolute bottom-0 right-0 text-[120px] font-bold italic text-gray-400/30 pointer-events-none leading-none"
+     style="-webkit-text-stroke:4px white;">
+16
+</div>
+
+</div>
+
+<div class="glass-card p-10 flex-1 relative overflow-hidden" onclick="location.href='obs26.html'">
+
+<h2 class="section-label">Case Study</h2>
+<h4 class="text-2xl font-thin mt-4">Obs.26 Market Lag</h4>
+
+<div class="absolute bottom-0 right-0 text-[120px] font-bold italic text-gray-400/30 pointer-events-none leading-none"
+     style="-webkit-text-stroke:4px white;">
+26
+</div>
+
+</div>
+
+</div>
+
+
+<!-- 修改后的 Final Conclusion -->
+
+<div class="col-span-12 glass-card p-12 text-center mt-10">
+
+<h2 class="section-label mb-12">Final Conclusion</h2>
+
+<p class="text-3xl md:text-4xl font-thin tracking-tighter leading-tight text-black">
+Social-media sentiment reflects current market mood, <br>but does not forecast future returns.
+</p>
+
+</div>
+
+</main>
+
+<div class="max-w-7xl mx-auto text-center mt-12 mb-20">
+
+<a href="Final_Report.pdf" target="_blank"
+class="inline-block border border-black/20 px-8 py-3 text-sm tracking-[0.2em] uppercase font-semibold hover:bg-black hover:text-white transition-all duration-300">
+
+View Full Report (PDF)
+
+</a>
+
+</div>
+
+<footer class="max-w-7xl mx-auto py-12 border-t border-black/5 text-center">
+
+<p class="text-[10px] tracking-[0.6em] text-gray-400 font-bold uppercase">
+XU LEYUN
+</p>
+
+</footer>
+
+
+<script>
+
+function openDetails(id){
+document.getElementById("details-overlay").classList.add("active")
+}
+
+function closeDetails(){
+document.getElementById("details-overlay").classList.remove("active")
+}
+
+</script>
+
+</body>
+</html>
