@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lag-1 Regression</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap');
+body{
+background:#e2e8f0;
+font-family:'Inter',sans-serif;
+}
+</style>
+
+</head>
+
+
+<body class="p-20">
+
+<a href="index.html" class="text-sm font-bold tracking-widest">← BACK</a>
+
+<div class="mt-20 max-w-5xl">
+
+<h1 class="text-7xl font-thin mb-6">
+Lag-1 Regression
+</h1>
+
+<h2 class="text-xl text-gray-400 mb-10">
+Predictive Power
+</h2>
+
+<p class="text-xl text-gray-600">
+The final step tests whether social media sentiment has predictive power for future stock performance by using a one-week lag regression model. In this approach, the sentiment score from the current week is used to explain AAPL’s return in the following week. If sentiment contains forward-looking information, the lagged sentiment variable should show a significant relationship with next week’s returns. However, the regression results show a near-zero correlation (r ≈ −0.037) and a very high p-value (p ≈ 0.80), indicating no predictive power. This finding suggests that social media sentiment mainly reflects contemporaneous market reactions rather than providing reliable signals about future price movements. In other words, Twitter sentiment acts more as a real-time indicator of investor mood than as a forecasting tool for subsequent returns.
+</p>
+
+</div>
+
+</body>
+</html>
